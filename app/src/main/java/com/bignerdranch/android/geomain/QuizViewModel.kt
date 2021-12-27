@@ -29,11 +29,8 @@ class QuizViewModel: ViewModel() {
 
     //Ну надо придумать что тут делать !!
     fun moveToNext() {
-        if(questionBank.size > currentIndex ){
-
             currentIndex = (currentIndex + 1) % questionBank.size
-        }
-        else Log.d("MyLogActivMain", "gggg")
+
     }
     fun moveToBack() {
         currentIndex = (currentIndex - 1) % questionBank.size
