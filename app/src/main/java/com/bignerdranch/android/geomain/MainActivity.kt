@@ -1,8 +1,8 @@
 package com.bignerdranch.android.geomain
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -60,7 +60,9 @@ class MainActivity : AppCompatActivity() {
 
         nextButton.setOnClickListener {
             if (quizViewModel.currentIndex == quizViewModel.questionBank.lastIndex){
-                Log.d("MyLogActivMain", "И что ? и все!")
+                //Log.d("MyLogActivMain", "И что ? и все!")
+                val intent = Intent(this, FinisActivity::class.java)
+                startActivity(intent)
             }
             else
             {
@@ -77,6 +79,8 @@ class MainActivity : AppCompatActivity() {
             {
                 buttBack.setEnabled(false)
                 Log.d("MyLogActivMain", "И что ? и все!")
+
+
             }
             else {
 
