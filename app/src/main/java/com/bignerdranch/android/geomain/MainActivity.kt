@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 
 private const val TAG = "MainActivity"
 private const val KEY_INDEX = "index"
+private var counters = 0
 
 class MainActivity : AppCompatActivity() {
     private lateinit var trueButton: Button
@@ -23,9 +24,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private val quizViewModel: QuizViewModel by
-    lazy {
-        ViewModelProvider(this).get(QuizViewModel::class.java)
-    }
+    lazy { ViewModelProvider(this).get(QuizViewModel::class.java) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,9 +59,17 @@ class MainActivity : AppCompatActivity() {
 
         nextButton.setOnClickListener {
             if (quizViewModel.currentIndex == quizViewModel.questionBank.lastIndex){
-                //Log.d("MyLogActivMain", "И что ? и все!")
+
                 val intent = Intent(this, FinisActivity::class.java)
+                intent.putExtra("name", "$counters")
                 startActivity(intent)
+                quizViewModel.moveToStart()
+                updateQuestion()
+                counters = 0
+
+
+                Log.d("MyLogActivMain", "open FinisActivity")
+                Log.d("MyLogActivMain", "$counters")
             }
             else
             {
@@ -88,6 +95,7 @@ class MainActivity : AppCompatActivity() {
                 updateQuestion()
             }
         }
+
         buttStart.setOnClickListener {
             quizViewModel.moveToStart()
             updateQuestion()
@@ -129,20 +137,21 @@ class MainActivity : AppCompatActivity() {
         questionTextView.setText(questionTextResId)
     }
     private fun checkAnswer(userAnswer: Boolean) {
-      //  var counters = 0
+
         val correctAnswer = quizViewModel.currentQuestionAnswer
         val messageResId =
-            if (userAnswer == correctAnswer)
-            {
+            if (userAnswer == correctAnswer) {
+                ++counters
                 R.string.correct_toast
             }
             else {
+                counters == 0
                 R.string.incorrect_toast
+
             }
 
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
-        //Log.d("MyLogActivMain" ,"$counters")
-    }
 
+        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show()
+    }
 
 }
