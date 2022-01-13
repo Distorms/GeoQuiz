@@ -145,7 +145,6 @@ class MainActivity : AppCompatActivity() {
                 R.string.correct_toast
             }
             else {
-                counters == 0
                 R.string.incorrect_toast
 
             }
